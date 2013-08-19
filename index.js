@@ -3,13 +3,29 @@
 //
 // Bootstrap file for web application
 //
-var server = require("./server");
-var router = require("./router");
-var requestHandlers = require("./requesthandlers");
+// var server = require("./server");
+// var router = require("./router");
+// var requestHandlers = require("./requesthandlers");
 
-var handle = {}
-handle["/"] = requestHandlers.start;
-handle["/start"] = requestHandlers.start;
-handle["/upload"] = requestHandlers.upload;
+// var handle = {}
+// handle["/"] = requestHandlers.start;
+// handle["/start"] = requestHandlers.start;
+// handle["/upload"] = requestHandlers.upload;
 
-server.start(router.route, handle);
+// server.start(router.route, handle);
+
+var express = require('express');
+var fs = require('fs');
+var app = express();
+app.use(express.logger());
+
+app.get('/', function(request, response) {
+    var html_buffer = fs.readFileSync('index.html');
+    response.send(html_buffer.toString());
+    //response.send('Hello World 2!');
+});
+
+var port = process.env.PORT || 5000;
+app.listen(port, function() {
+  console.log("Listening on " + port);
+});
